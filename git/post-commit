@@ -1,0 +1,16 @@
+#!/bin/sh
+
+i=0;
+cmd=$(git diff --name-status HEAD~1);
+
+array=(${cmd//  / });
+
+for var in ${array[@]}
+do
+        if [ `expr $i % 2` -eq 1 ];then
+                echo $var;
+		cpplint=$(cpplint --linelength=100 $var)
+		echo $cpplint;
+        fi
+        let i+=1;
+done
